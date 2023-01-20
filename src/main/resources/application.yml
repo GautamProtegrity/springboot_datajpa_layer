@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:datadb
+    driverClassName: org.h2.Driver
+    username: dbuser1
+    password: dbuser1@123
+  sql:
+    init:
+      data-locations: classpath:db/schema.sql,classpath:db/data.sql
+    query:
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
+      format-sql: true
+    show-sql: true
+  h2:
+    console:
+      enabled: true
