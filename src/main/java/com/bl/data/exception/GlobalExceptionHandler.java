@@ -42,4 +42,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return entity;
     }
 
+    @ExceptionHandler(AuthorProcessingException.class)
+    public ResponseEntity<Object> handleExceptions(AuthorProcessingException exception, WebRequest webRequest) {
+        ResponseEntity<Object> entity = new ResponseEntity<>(
+                GlobalExceptionResponse.builder()
+                        .message(exception.getLocalizedMessage())
+                        .dateTime(LocalDateTime.now())
+                        .build(), HttpStatus.EXPECTATION_FAILED);
+        return entity;
+    }
+
 }

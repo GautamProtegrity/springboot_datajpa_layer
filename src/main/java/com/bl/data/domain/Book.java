@@ -17,8 +17,7 @@ public class Book {
     private String bookName;
     @Column(name="PUBLISHER")
     private String publisher;
-    @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "AUTHOR_ID", nullable = false)
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "AUTHOR_ID")
     private Author author;
 }

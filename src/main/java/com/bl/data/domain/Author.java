@@ -1,6 +1,5 @@
 package com.bl.data.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,7 +18,8 @@ public class Author {
     private String authorName;
     @Column(name="AUTHOR_DETAILS")
     private String authorDetails;
-    @JsonBackReference
-    @OneToMany(mappedBy = "author", cascade = CascadeType.REMOVE)
+    @Column(name="SCRIPT_INTRO_LAYOUT", columnDefinition = "TEXT")
+    private String introLayout;
+    @OneToMany(mappedBy = "author", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Book> books;
 }

@@ -1,5 +1,6 @@
 package com.bl.data.service.impl;
 
+import com.bl.data.common.utils.CommonUtil;
 import com.bl.data.domain.Book;
 import com.bl.data.domain.dto.BookDTO;
 import com.bl.data.exception.BookNotFoundException;
@@ -20,10 +21,13 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     AuthorRepository authorRepository;
+
+    @Autowired
+    CommonUtil commonUtil;
     
     @Override
     public List<BookDTO> fetchAllBooks() {
-        return mapBook(bookRepository.findAll());
+        return commonUtil.mapBook(bookRepository.findAll());
     }
 
     @Override
@@ -34,7 +38,7 @@ public class BookServiceImpl implements BookService {
         book.setPublisher(request.getPublisher());
         book.setAuthor(authorRepository.getReferenceById(request.getAuthorId()));
         bookRepository.save(book);
-        return mapBook(List.of(book)).get(0);
+        return commonUtil.mapBook(List.of(book)).get(0);
     }
 
     @Override
@@ -42,7 +46,7 @@ public class BookServiceImpl implements BookService {
         BookDTO bookDTO = null;
         try{
             Book book = bookRepository.findById(id).get();
-             bookDTO = mapBook(List.of(book)).get(0);
+             bookDTO = commonUtil.mapBook(List.of(book)).get(0);
         }catch(Exception ex){
             throw BookNotFoundException.builder()
                     .message(ex.getLocalizedMessage())
@@ -61,7 +65,7 @@ public class BookServiceImpl implements BookService {
             book.setBookName(request.getBookName());
             book.setPublisher(request.getPublisher());
             bookRepository.saveAndFlush(book);
-            bookDTO = mapBook(List.of(book)).get(0);
+            bookDTO = commonUtil.mapBook(List.of(book)).get(0);
         }catch(Exception ex){
             throw BookNotFoundException.builder()
                     .message(ex.getLocalizedMessage())
@@ -77,7 +81,7 @@ public class BookServiceImpl implements BookService {
         try{
             Book book = bookRepository.getReferenceById(id);
             bookRepository.delete(book);
-            bookDto = mapBook(List.of(book)).get(0);
+            bookDto = commonUtil.mapBook(List.of(book)).get(0);
         }catch (Exception ex){
             throw BookNotFoundException.builder()
                     .message(ex.getLocalizedMessage())
@@ -86,19 +90,5 @@ public class BookServiceImpl implements BookService {
         }
 
         return bookDto;
-    }
-
-    private List<BookDTO> mapBook(List<Book> books){
-        List<BookDTO> bookDTOS = new ArrayList<>();
-        books.parallelStream().forEach(
-                x-> bookDTOS.add(BookDTO.builder()
-                        .bookCode(x.getBookCode())
-                        .bookName(x.getBookName())
-                        .publisher(x.getPublisher())
-                        .author(x.getAuthor())
-                        .authorId(null)
-                        .build())
-        );
-        return bookDTOS;
     }
 }

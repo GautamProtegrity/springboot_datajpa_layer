@@ -1,6 +1,7 @@
 package com.bl.data.domain.dto;
 
 import com.bl.data.domain.Author;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -13,8 +14,8 @@ public class BookDTO {
     private Integer bookCode;
     private String bookName;
     private String publisher;
-    @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
-    private Author author;
+    @JsonIgnoreProperties(value = {"books"})
+    private AuthorDTO author;
     private Integer authorId;
 
 }
