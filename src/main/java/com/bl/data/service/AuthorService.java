@@ -1,8 +1,10 @@
 package com.bl.data.service;
 
 import com.bl.data.domain.dto.AuthorDTO;
+import com.bl.data.domain.dto.SearchDTO;
 import com.bl.data.exception.AuthorCreationException;
 import com.bl.data.exception.AuthorNotFoundException;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,4 +21,6 @@ public interface AuthorService {
     public AuthorDTO updateAuthor(Integer id, AuthorDTO request)throws AuthorNotFoundException;
 
     public AuthorDTO deleteAuthor(Integer id)throws AuthorNotFoundException;
+
+    public Page<SearchDTO> searchAuthorBookDetails();
 }

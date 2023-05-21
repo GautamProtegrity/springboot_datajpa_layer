@@ -3,11 +3,13 @@ package com.bl.data.service.impl;
 import com.bl.data.common.utils.CommonUtil;
 import com.bl.data.domain.Author;
 import com.bl.data.domain.dto.AuthorDTO;
+import com.bl.data.domain.dto.SearchDTO;
 import com.bl.data.exception.AuthorCreationException;
 import com.bl.data.exception.AuthorNotFoundException;
 import com.bl.data.repositories.AuthorRepository;
 import com.bl.data.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -95,6 +97,11 @@ public class AuthorServiceImpl implements AuthorService {
                     .build();
         }
         return authorDTO;
+    }
+
+    @Override
+    public Page<SearchDTO> searchAuthorBookDetails() {
+        return authorRepository.getPagedAllAuthor();
     }
 
 }

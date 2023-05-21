@@ -35,4 +35,9 @@ public class AuthorController {
     public ResponseEntity deleteAuthor(@PathVariable("id") Integer id){
         return ResponseEntity.ok(authorService.deleteAuthor(id));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity searchAuthor(){
+        return ResponseEntity.ok(authorService.searchAuthorBookDetails());
+    }
 }
